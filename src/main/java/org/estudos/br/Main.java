@@ -24,9 +24,11 @@ public class Main {
         while (continuar) {
             // Imprime um menu para o usuário escolher qual API consultar
             System.out.println("\nEscolha uma opção:");
-            System.out.println("1. Consultar informações de um estado");
-            System.out.println("2. Consultar informações de um distrito");
-            System.out.println("3. Sair");
+            System.out.println("1. Consultar informações de uma regiao");
+            System.out.println("2. Consultar informações dos estados de uma região");
+            System.out.println("3. Consultar informações de todos os estados");
+            System.out.println("4. Consultar informações de um distrito");
+            System.out.println("5. Sair");
 
             System.out.print("Opção: ");
 
@@ -37,12 +39,18 @@ public class Main {
                 // Verifica a opção do usuário e executa a ação correspondente
                 switch (opcao) {
                     case 1:
-                        consultarEstado(scanner);
+                        consultarRegiao(scanner);
                         break;
                     case 2:
-                        consultarDistrito(scanner);
+                        consultarEstadosRegiao(scanner);
                         break;
                     case 3:
+                        consultarEstados();
+                        break;
+                    case 4:
+                        consultarDistritoIdentificador(scanner);
+                        break;
+                    case 5:
                         continuar = false;
                         System.out.println("\n Obrigado por usar nossos serviços!");// Sair do loop do menu
                         break;
@@ -60,20 +68,21 @@ public class Main {
     }
 
     /**
-     * Método para consultar informações de um estado.
+     * Método para consultar informações de uma região.
      *
      * @param scanner O Scanner para ler a entrada do usuário.
      * @throws IOException Se houver algum erro de conexão ou leitura.
      */
-    private static void consultarEstado(Scanner scanner) throws IOException {
+
+    private static void consultarRegiao(Scanner scanner) throws IOException {
         // Imprime uma mensagem de instrução para o usuário
-        System.out.println("Digite a sigla do estado a ser consultado: ");
+        System.out.println("Digite o id da região a ser consultada: ");
 
-        // Lê a sigla do estado fornecida pelo usuário
-        String uf = scanner.next().toUpperCase();
+        // Lê o id da região fornecido pelo usuário
+        int id = scanner.nextInt();
 
-        // Chama o método consultarEstado da classe ConsultaIBGE para obter informações do estado
-        String resultado = ConsultaIBGE.consultarEstado(uf);
+        // Chama o método consultarRegiao da classe ConsultaIBGE para obter informações da região
+        String resultado = ConsultaIBGE.consultarRegiao(id);
 
         // Imprime o resultado da consulta
         System.out.println("Resultado da consulta: ");
@@ -81,23 +90,68 @@ public class Main {
     }
 
     /**
-     * Método para consultar informações de um distrito.
+     * Método para consultar informações dos estados de uma região.
      *
      * @param scanner O Scanner para ler a entrada do usuário.
      * @throws IOException Se houver algum erro de conexão ou leitura.
      */
-    private static void consultarDistrito(Scanner scanner) throws IOException {
-        // Imprime uma mensagem de instrução para o usuário
-        System.out.println("Digite o ID do distrito a ser consultado: ");
 
-        // Lê o ID do distrito fornecido pelo usuário
+    private static void consultarEstadosRegiao(Scanner scanner) throws IOException {
+        // Imprime uma mensagem de instrução para o usuário
+        System.out.println("Digite o id da região que pretende consultar os estados: ");
+
+        // Lê a sigla do estado fornecida pelo usuário
         int id = scanner.nextInt();
 
-        // Chama o método consultarDistrito da classe ConsultaIBGE para obter informações do distrito
-        String resultado = ConsultaIBGE.consultarDistrito(id);
+        // Chama o método consultarEstadosRegiao da classe ConsultaIBGE para obter informações da região
+        String resultado = ConsultaIBGE.consultarEstadosRegiao(id);
 
         // Imprime o resultado da consulta
         System.out.println("Resultado da consulta: ");
         System.out.println(resultado);
     }
+
+
+
+
+    /**
+     * Método para consultar informações de todos os estados.
+     *
+     *
+     * @throws IOException Se houver algum erro de conexão ou leitura.
+     */
+    private static void consultarEstados() throws IOException {
+
+        // Chama o método consultarEstados da classe ConsultaIBGE para obter informações dos Estados
+        String resultado = ConsultaIBGE.consultarEstados();
+
+        // Imprime o resultado da consulta
+        System.out.println("Resultado da consulta: ");
+        System.out.println(resultado);
+    }
+
+
+
+    /**
+     * Método para consultar informações de um distrito.
+     *
+     * @param scanner O Scanner para ler a entrada do usuário.
+     * @throws IOException Se houver algum erro de conexão ou leitura.
+     */
+    private static void consultarDistritoIdentificador(Scanner scanner) throws IOException {
+        // Imprime uma mensagem de instrução para o usuário
+        System.out.println("Digite o identificador do distrito a ser consultado: ");
+
+        // Lê o Identificador do distrito fornecido pelo usuário
+        int identificador = scanner.nextInt();
+
+        // Chama o método consultarDistritoIdentificador da classe ConsultaIBGE para obter informações do distrito
+        String resultado = ConsultaIBGE.consultarDistritoIndentificador(identificador);
+
+        // Imprime o resultado da consulta
+        System.out.println("Resultado da consulta: ");
+        System.out.println(resultado);
+    }
+
 }
+
